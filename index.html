@@ -3,69 +3,559 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07111f">
+    <meta name="description" content="An introduction to cybersecurity roles, ethical testing, and getting started in the field.">
+    <title>Cybersecurity, clearly | Hackers Dinner</title>
     <style>
+        :root {
+            color-scheme: dark;
+            --page: #07111f;
+            --surface: rgba(17, 31, 49, 0.82);
+            --surface-strong: #12233a;
+            --text: #f3f7fc;
+            --muted: #a9b8cb;
+            --accent: #75f0c0;
+            --accent-dark: #163d39;
+            --line: rgba(189, 211, 233, 0.15);
+            --content-width: 1120px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 6rem;
+        }
+
         body {
+            min-width: 320px;
+            margin: 0;
             background:
-        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url("hacker7.jpg");
-
-    background-size: cover;
-    background-position: center;
+                radial-gradient(ellipse at 82% 12%, rgba(20, 107, 103, 0.2), transparent 34rem),
+                var(--page);
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
         }
-        video{
-            width: 200px;
-            height: auto;
-            margin: 20px;
-        }
-        form{
-            padding: 10px;
-            margin:10px;
-            
-            height: 400px;
-            border-radius: 8px;
-           background-image: linear-gradient(to left ,rgba(0, 128, 0, 0.466),rgba(255, 0, 0, 0.61));
-            color: aliceblue;
 
-            
+        a {
+            color: inherit;
+        }
+
+        a:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        .skip-link {
+            position: absolute;
+            z-index: 2;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.7rem 1rem;
+            transform: translateY(-160%);
+            border-radius: 0.5rem;
+            background: var(--accent);
+            color: #07111f;
+            font-weight: 700;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        .site-header {
+            position: sticky;
+            z-index: 1;
+            top: 0;
+            border-bottom: 1px solid var(--line);
+            background: rgba(7, 17, 31, 0.86);
+            backdrop-filter: blur(16px);
+        }
+
+        .nav-shell,
+        .content-shell {
+            width: min(var(--content-width), calc(100% - 3rem));
+            margin-inline: auto;
+        }
+
+        .nav-shell {
+            display: flex;
+            min-height: 76px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--text);
+            font-size: 0.98rem;
+            font-weight: 750;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 2.25rem;
+            aspect-ratio: 1;
+            place-items: center;
+            border: 1px solid rgba(117, 240, 192, 0.35);
+            border-radius: 0.7rem;
+            background: var(--accent-dark);
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: clamp(1rem, 3vw, 2rem);
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 160ms ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hero {
+            position: relative;
+            display: grid;
+            min-height: min(680px, calc(100svh - 76px));
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+            background:
+                linear-gradient(90deg, rgba(7, 17, 31, 0.97) 0%, rgba(7, 17, 31, 0.88) 43%, rgba(7, 17, 31, 0.22) 100%),
+                linear-gradient(0deg, var(--page) 0%, transparent 34%),
+                url("hacker7.jpg") center 44% / cover;
+        }
+
+        .hero-content {
+            width: min(var(--content-width), calc(100% - 3rem));
+            margin: 0 auto;
+            padding-block: 6rem 7rem;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin: 0 0 1.3rem;
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 750;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            width: 1.35rem;
+            height: 1px;
+            background: currentColor;
+            content: "";
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            max-width: 760px;
+            margin-bottom: 1.25rem;
+            font-size: clamp(2.8rem, 7vw, 5.8rem);
+            font-weight: 750;
+            letter-spacing: -0.065em;
+            line-height: 0.99;
+        }
+
+        h1 span {
+            color: var(--accent);
+        }
+
+        .hero-copy {
+            max-width: 580px;
+            margin-bottom: 2rem;
+            color: #c2cede;
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 3.2rem;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            padding: 0.85rem 1.25rem;
+            border: 1px solid var(--accent);
+            border-radius: 0.65rem;
+            background: var(--accent);
+            color: #07111f;
+            font-size: 0.95rem;
+            font-weight: 750;
+            text-decoration: none;
+            transition: transform 160ms ease, background-color 160ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            background: #a0f7d3;
+        }
+
+        .section {
+            padding-block: clamp(4rem, 8vw, 7rem);
+        }
+
+        .section-heading {
+            max-width: 640px;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-heading .eyebrow {
+            margin-bottom: 0.9rem;
+        }
+
+        h2 {
+            margin-bottom: 0.8rem;
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            letter-spacing: -0.045em;
+            line-height: 1.1;
+        }
+
+        .section-heading > p:last-child {
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .role-card {
+            display: flex;
+            min-height: 255px;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.5rem;
+            border: 1px solid var(--line);
+            border-radius: 1rem;
+            background: linear-gradient(145deg, rgba(24, 43, 66, 0.92), rgba(12, 25, 42, 0.88));
+            transition: border-color 180ms ease, transform 180ms ease;
+        }
+
+        .role-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(117, 240, 192, 0.48);
+        }
+
+        .role-number {
+            display: grid;
+            width: 2.5rem;
+            aspect-ratio: 1;
+            margin-bottom: 1.2rem;
+            place-items: center;
+            border: 1px solid rgba(117, 240, 192, 0.2);
+            border-radius: 0.75rem;
+            background: rgba(117, 240, 192, 0.08);
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 750;
+        }
+
+        .role-card h3 {
+            margin-bottom: 0.55rem;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .role-card p {
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: 0.94rem;
+        }
+
+        .role-card a {
+            margin-top: auto;
+            padding-top: 1rem;
+            color: var(--accent);
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration-color: transparent;
+            text-underline-offset: 0.25em;
+        }
+
+        .role-card a:hover {
+            text-decoration-color: currentColor;
+        }
+
+        .intro-panel {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            align-items: center;
+            gap: clamp(2rem, 6vw, 5rem);
+            padding: clamp(1.5rem, 4vw, 3.5rem);
+            border: 1px solid var(--line);
+            border-radius: 1.25rem;
+            background: var(--surface);
+        }
+
+        .intro-panel img {
+            display: block;
+            width: 100%;
+            min-height: 280px;
+            max-height: 410px;
+            border-radius: 0.9rem;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .intro-copy .eyebrow {
+            margin-bottom: 0.9rem;
+        }
+
+        .intro-copy p:not(.eyebrow) {
+            color: var(--muted);
+        }
+
+        .callout {
+            margin: 1.5rem 0 1.8rem;
+            padding: 1rem 1.1rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 0.55rem 0.55rem 0;
+            background: rgba(117, 240, 192, 0.07);
+            color: #d9e5f0;
+        }
+
+        .callout strong {
+            color: var(--accent);
+        }
+
+        .video-section {
+            padding-top: 0;
+        }
+
+        .video-frame {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 1rem;
+            background: #000;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+        }
+
+        .video-frame video {
+            display: block;
+            width: 100%;
+            max-height: 620px;
+            background: #000;
+        }
+
+        .site-footer {
+            padding-block: 1.7rem;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .footer-content p {
+            margin: 0;
+        }
+
+        @media (max-width: 900px) {
+            .role-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-shell,
+            .content-shell {
+                width: min(100% - 2rem, var(--content-width));
+            }
+
+            .nav-shell {
+                min-height: 68px;
+                flex-wrap: wrap;
+                gap: 0.25rem 1rem;
+                padding-block: 0.75rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.82rem;
+            }
+
+            .hero {
+                min-height: 600px;
+                background-position: 58% center;
+                background-image:
+                    linear-gradient(90deg, rgba(7, 17, 31, 0.93), rgba(7, 17, 31, 0.68)),
+                    linear-gradient(0deg, var(--page), transparent 50%),
+                    url("hacker7.jpg");
+            }
+
+            .hero-content {
+                width: min(100% - 2rem, var(--content-width));
+                padding-block: 5rem;
+            }
+
+            .role-grid,
+            .intro-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .role-card {
+                min-height: 220px;
+            }
+
+            .intro-panel {
+                gap: 1.75rem;
+            }
+
+            .intro-panel img {
+                min-height: 220px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
-    <title>Hacker001🚫</title>
 </head>
-<body1>
-    <h1 style="font-size: xx-large;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: justify;color: red;font-weight:bolder;"
-    >Hackers Dinner🧑‍💻👩‍💻</h1>
-    <h1 style="font-size: xx-large;color: rgb(8, 50, 70);font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    outline-style: groove;text-align: start;">Hackers category panel</h1>
-    <h2 style="display: inline-block;font-size: 30 px;">
-        There are difrent category of pentration testers in the cyber security world.
-<form  > 
-    
-    <h3>The following are category of pentesters aka hackers</h3> 
-    <h3>1.black hat hackers</h3>
-    <h3>2.The Red hat</h3>
-    <H3>3.the grey hat </H3>
-    <h3>4.The whisle blowers</h3>
-</form>      
-    <h1 style="font-size: xx-large;font-style: oblique;text-decoration-color: rgb(243, 243, 243);">Geting into cyber security 💻</h1>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+        <nav class="nav-shell" aria-label="Main navigation">
+            <a class="brand" href="#top">
+                <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+                <span>Hackers Dinner</span>
+            </a>
+            <div class="nav-links">
+                <a href="#roles">Explore roles</a>
+                <a href="#getting-started">Getting started</a>
+                <a href="#watch">Watch</a>
+            </div>
+        </nav>
+    </header>
 
-<img  style="height: 60%;width: 100%;text-decoration: line-through;" src="hacker.jpg" alt=" there are several ways">
-<h1 style="font-size: x-large;outline-style: double;">
-    Clik on the following hyperlinks to navigate to your desired category
-</h1>
-<a  style="font-size: xx-large;
-font-weight: 900;" href="blackhat.html">black hat hacker</a><br>
+    <main id="main-content">
+        <section class="hero" id="top" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <p class="eyebrow">A guide to the field</p>
+                <h1 id="hero-title">Cybersecurity, <span>clearly.</span></h1>
+                <p class="hero-copy">Curious about the people who protect our digital world? Get to know the different roles, ideas, and responsible ways to begin.</p>
+                <a class="button" href="#roles">Explore the roles <span aria-hidden="true">↓</span></a>
+            </div>
+        </section>
 
+        <section class="section" id="roles" aria-labelledby="roles-title">
+            <div class="content-shell">
+                <div class="section-heading">
+                    <p class="eyebrow">Different paths, shared responsibility</p>
+                    <h2 id="roles-title">Meet the people behind security</h2>
+                    <p>“Hacker” can mean many things. These broad categories describe different approaches to technology and security.</p>
+                </div>
+                <div class="role-grid">
+                    <article class="role-card">
+                        <span class="role-number" aria-hidden="true">01</span>
+                        <h3>White hat</h3>
+                        <p>Authorized security professionals who help organizations find and fix weaknesses before they can be abused.</p>
+                    </article>
+                    <article class="role-card">
+                        <span class="role-number" aria-hidden="true">02</span>
+                        <h3>Red team</h3>
+                        <p>Specialists who simulate threats—with clear permission—to help teams improve their defenses.</p>
+                    </article>
+                    <article class="role-card">
+                        <span class="role-number" aria-hidden="true">03</span>
+                        <h3>Blue team</h3>
+                        <p>Defenders who monitor systems, investigate suspicious activity, and strengthen security over time.</p>
+                    </article>
+                    <article class="role-card">
+                        <span class="role-number" aria-hidden="true">04</span>
+                        <h3>Black hat</h3>
+                        <p>People who use technical skills without permission or for harm. Learn about this term in a responsible context.</p>
+                        <a href="blackhat.html">Read the overview <span aria-hidden="true">→</span></a>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-    
-<div>
-    <Video   controls="controls" src="vida.mp4"></Video><br>
-</div>
+        <section class="section" id="getting-started" aria-labelledby="getting-started-title">
+            <div class="content-shell">
+                <div class="intro-panel">
+                    <img src="hacker1.jpg" alt="A stylized figure working at a computer with code displayed on screens">
+                    <div class="intro-copy">
+                        <p class="eyebrow">Start with the fundamentals</p>
+                        <h2 id="getting-started-title">Build skills the responsible way</h2>
+                        <p>Cybersecurity is a broad field built on curiosity, careful thinking, and respect for other people’s systems and data. Begin with networking, operating systems, and programming basics.</p>
+                        <p>Practice only in environments designed for learning, such as your own lab or an explicitly authorized training platform.</p>
+                        <div class="callout"><strong>Permission matters.</strong> Never test a system unless you own it or have clear authorization.</div>
+                        <a class="button" href="#watch">Continue exploring <span aria-hidden="true">↓</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        
+        <section class="section video-section" id="watch" aria-labelledby="watch-title">
+            <div class="content-shell">
+                <div class="section-heading">
+                    <p class="eyebrow">Take a closer look</p>
+                    <h2 id="watch-title">A little more inspiration</h2>
+                    <p>Watch the featured video and keep exploring the many paths into cybersecurity.</p>
+                </div>
+                <div class="video-frame">
+                    <video controls preload="metadata" poster="hacker7.jpg" aria-label="Cybersecurity video">
+                        <source src="vida.mp4" type="video/mp4">
+                        Your browser does not support HTML video.
+                    </video>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    
-</body1>
-
-</body2>
+    <footer class="site-footer">
+        <div class="content-shell footer-content">
+            <p>Hackers Dinner · An introduction to cybersecurity</p>
+            <p>Learn responsibly. Protect what matters.</p>
+        </div>
+    </footer>
+</body>
 </html>
